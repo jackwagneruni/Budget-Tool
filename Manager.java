@@ -19,7 +19,6 @@ public class Manager implements HasMenu {
     }
     
     private void initializeCategories() {
-        // Create main categories
         Category housing = new Category("Housing");
         Category food = new Category("Food");
         Category transportation = new Category("Transportation");
@@ -28,7 +27,6 @@ public class Manager implements HasMenu {
         Category savings = new Category("Savings");
         Category income = new Category("Income");
         
-        // Add subcategories
         housing.addSubCategory(new Category("Rent"));
         housing.addSubCategory(new Category("Mortgage"));
         housing.addSubCategory(new Category("Home Maintenance"));
@@ -189,7 +187,6 @@ public class Manager implements HasMenu {
             Expense expense = new Expense(amount, date, vendor, category, notes);
             account.addTransaction(expense);
             
-            // Update budget tracking
             for (Budget budget : currentUser.getBudgets()) {
                 if (date.compareTo(budget.getStartDate()) >= 0 && date.compareTo(budget.getEndDate()) <= 0) {
                     budget.trackSpending(category, amount);
@@ -297,7 +294,6 @@ public class Manager implements HasMenu {
             return null;
         }
         
-        // Print the report directly instead of asking about CSV export
         report.printReport();
         
         return report;

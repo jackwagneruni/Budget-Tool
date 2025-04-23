@@ -31,7 +31,7 @@ public class Transfer implements FinancialItem, Serializable {
     
     @Override
     public Category getCategory() {
-        return null; // Transfers don't have categories
+        return null;
     }
     
     public Account getSourceAccount() {

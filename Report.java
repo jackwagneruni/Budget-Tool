@@ -78,7 +78,6 @@ public class Report {
                 Map<Category, Float> budgetStatus = budget.getBudgetStatus();
                 data.put(budget.getName(), budgetStatus);
                 
-                // Calculate totals
                 for (Map.Entry<Category, Float> entry : budget.getCategories().entrySet()) {
                     totalBudgeted += entry.getValue();
                     totalSpent += entry.getValue() - budgetStatus.getOrDefault(entry.getKey(), 0.0f);
@@ -90,13 +89,11 @@ public class Report {
         data.put("totalSpent", totalSpent);
     }
     
-    // Kept for backward compatibility, but deprecated in favor of printReport
     public void exportToCSV(String filename) throws IOException {
         System.out.println("CSV export is deprecated. Use printReport() instead.");
         printReport();
     }
     
-    // New method to print report to console with simple formatting
     public void printReport() {
         System.out.println("\n=================================================");
         System.out.println(String.format("%s REPORT", type.toUpperCase()));
@@ -104,7 +101,6 @@ public class Report {
         System.out.println("Period: " + dateFormat.format(startDate) + " to " + dateFormat.format(endDate));
         System.out.println("-------------------------------------------------");
         
-        // Different formatting based on report type
         if (type.equals("Spending")) {
             printSpendingReport();
         } else if (type.equals("Income")) {
@@ -173,7 +169,6 @@ public class Report {
         System.out.println("BUDGET SUMMARY:");
         System.out.println("-------------------------------------------------");
         
-        // Print each budget's details
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             if (entry.getValue() instanceof Map && !entry.getKey().equals("categorySpending") && 
                 !entry.getKey().equals("incomeBySource")) {
@@ -207,7 +202,6 @@ public class Report {
         return data;
     }
     
-    // Original toString still available but simplified
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -220,7 +214,7 @@ public class Report {
                 entry.getKey().equals("totalSpent") || 
                 entry.getKey().equals("totalIncome") ||
                 entry.getKey().equals("totalSpending")) {
-                continue; // Skip totals as they're included in the final section
+                continue;
             }
             
             sb.append(entry.getKey()).append(":\n");
