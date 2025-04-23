@@ -168,7 +168,7 @@ public class Manager implements HasMenu {
             
             List<Category> subCategories = category.getSubCategories();
             if (!subCategories.isEmpty()) {
-                System.out.println("Subcategories:");
+                System.out.println("Subcategories of " + category.getName() + ":");
                 for (int i = 0; i < subCategories.size(); i++) {
                     System.out.println(i + ": " + subCategories.get(i).getName());
                 }
@@ -297,20 +297,8 @@ public class Manager implements HasMenu {
             return null;
         }
         
-        System.out.println("\n" + report);
-        
-        System.out.print("Export to CSV? (y/n): ");
-        String export = scanner.nextLine();
-        if (export.equalsIgnoreCase("y")) {
-            System.out.print("Enter filename: ");
-            String filename = scanner.nextLine();
-            try {
-                report.exportToCSV(filename);
-                System.out.println("Report exported successfully!");
-            } catch (IOException e) {
-                System.out.println("Error exporting report: " + e.getMessage());
-            }
-        }
+        // Print the report directly instead of asking about CSV export
+        report.printReport();
         
         return report;
     }
@@ -382,8 +370,8 @@ public class Manager implements HasMenu {
             
             if (categoryIndex == 0) break;
             
-            if (categoryIndex > 0 && categoryIndex <= categories.size()) {
-                Category category = categories.get(categoryIndex - 1);
+            if (categoryIndex >= 0 && categoryIndex < categories.size()) {
+                Category category = categories.get(categoryIndex);
                 System.out.print("Enter budget amount for " + category.getName() + ": ");
                 float amount = Float.parseFloat(scanner.nextLine());
                 budget.setCategoryLimit(category, amount);
@@ -511,7 +499,7 @@ public class Manager implements HasMenu {
     private void listCategories() {
         System.out.println("Categories:");
         for (int i = 0; i < categories.size(); i++) {
-            System.out.println((i + 1) + ": " + categories.get(i).getName());
+            System.out.println(i + ": " + categories.get(i).getName());
         }
     }
     
